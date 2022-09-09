@@ -1,101 +1,42 @@
-# C - Variables, if, else, while
+C - Variables, If, Else, While
+0. Postive anything is better than negative nothing
+Based on the source code, add code that will print whether the number stored in the variable n is positive or negative. I used conditionals to print results.
 
-In this project, I learned about using arithmetic, logical, relational, and boolean
-operators in C. Additionally, I practiced declaring and defining variables of type
-`char`, `int`, and `unsigned int`, using `if` and `if...else` statements, and
-implementing `while` loops.
+1. The last digit
+Based on the source code, add code to print the last digit of the number stored in variable n. I used conditionals and printf statements to determine the print results.
 
-## Tasks :page_with_curl:
+2. I sometimes suffer from insomnia. And when I can't fall asleep, I play what I call the alphabet game
+Write a program that prints the alphabet in lowercase, followed by a new line. In C, char types can handle arithmetic operations using their ASCII values. Knowing this, we can create loops that can increment or decrement the char values which can be translated back into a letter if needed.
 
-* **0. Positive anything is better than negative nothing**
-  * [0-positive_or_negative.c](./0-positive_or_negative.c): C program that prints whether
-  a randomly generated number is positive or negative, followed by a new line:
-    * Completion of [this source code](https://github.com/holbertonschool/0x01.c/blob/master/0-positive_or_negative_c).
-    * Stores a different random number every time the program is run.
-    * Prints the number followed by `is positive` if the number is greater than 0, `is zero` if the number is zero, or `is negative` if the number is less than 0.
+3. alphABET
+Write a program that prints the alphabet, in lowercase, and then in uppercase, followed by a new line. I used a brute force method where I just looped through for the lowercase, reset the variable for uppercase, and looped again.
 
-* **1. The last digit**
-  * [1-last_digit.c](./1-last_digit.c): C program that prints the last digit of a
-  randomly generated number, followed by a new line:
-    * Completion of [this source code](https://github.com/holbertonschool/0x01.c/blob/master/1-last_digit_c).
-    * Stores a different value every time the program is run.
-    * Prints the string `Last digit of` [number] `is` [last_digit] `and is` followed
-    by `greater than 5` if the digit is greater than 5, `0` if the digit is 0, or
-    `less than 6 and not 0` if the digit is less than 6 and not 0.
+4. When I was having that alphabet soup, I never thought that it would pay off
+Write a program that prints the alphabet in lowercase, followed by a new line. Print all letters except for 'q' and 'e'. Similar to the past exercises, I looped through and printed each char and had a conditional that would pass over 'q' and 'e'.
 
-* **2. I sometimes suffer from insomnia. And when I can't fall asleep, I play what I call the alphabet game**
-  * [2-print_alphabet.c](./2-print_alphabet.c): C program that prints the alphabet in
-  lowercase, followed by a new line, using only the `putchar` function exactly twice.
+5. Numbers
+Write a program that prints all numbers of base 10, starting from 0, followed by a new line. Using a loop, I can increment my variable that holds the current number, starting with 0. The restriction for this one was I had to use putchar. In order for me to convert the number into ASCII, I added 0 to each number within the putchar method.
 
-* **3. When I was having that alphabet soup, I never thought that it would pay off**
-  * [3-print_alphabets.c](./3-print_alphabets.c): C program that prints the alphabet in
-  lowercase, then in uppercase, followed by a new line, using only the `putchar`
-  function exactly three times.
+6. Numberz
+Write a program that prints all numbers of base 10 starting from 0, followed by a new line. You are not allowed to use char variables. Similar to exercise 5, I converted each number to ASCII for putchar.
 
-* **4. alphABET**
-  * [4-print_alphabt.c](./4-print_alphabt.c): C program that prints the alphabet in lowercase
-  except for the letters `q` and `e`, followed by a new line, using only the `putchar`
-  function exactly twice.
+7. Smile in the mirror
+Write a program that prints the alphabet, in reverse order, in lowercase. A cool thing you can do here is loop but in reverse using a decrement.
 
-* **5. Numbers**
-  * [5-print_numbers.c](./5-print_numbers.c): C program that prints all single digit numbers
-  of base 10 starting from `0`, followed by a new line.
+8. Hexadecimal
+Write a program that prints all the numbers of base 16 in lowercase. I simply used 2 separate loops, one for the numbers, and one for the letters.
 
-* **6. Numberz**
-  * [6-print_numberz.c](./6-print_numberz.c): C program that prints all single digit numbers
-  of base 10 starting from `0`, followed by a new line, using only the `putchar` function
-  exactly twice without any variables of type `char`.
+9. Patience, persistence and perspiration make an unbeatable combination for success
+Write a program that prints all possible combinations of single-digit numbers, separated by a comma and a space. I created an int to increment up within a loop and just print the number and the comma and space. I also needed an if conditional to ignore the last comma and space for the last number.
 
-* **7. Smile in the mirror**
-  * [7-print_tebahpla.c](./7-print_tebahpla.c): C program that prints the lowercase alphabet
-  in reverse, followed by a new line, using only the `putchar` function exactly twice.
+10. 00...99
+Write a program that prints numbers from 0 to 99. Single digit numbers must be preceded with a 0. Numbers should be comma and space separated. Using 3 int variables, I used one variable to count up to 99, and the other 2 variables to store the doubles digit and the singles digit. Using these separate numbers, I printed them out adjacent and with a comma and space after them. Adding another if conditional for the last number so that a comma and space isn't added at the very end.
 
-* **8. Hexadecimal**
-  * [8-print_base16.c](./8-print_base16.c): C program that prints all the numbers of base
-  16 in lowercase, followed by a new line, using only the `putchar` function exactly three
-  times.
+11. Inventing is a combination of brains and materials. The more brains you use, the less material you need
+Write a program that prints all possible different combinations of two digits. Numbers should be separated by a comma and space, and numbers with the same digits but in different order should not be printed twice. Similar to exercise 10, I used variables to store the doubles digit and singles digit. The pattern here was to keep incrementing the doubles digit and making sure that the singles digit was larger than the doubles digit.
 
-* **9. Patience, persistence and perspiration make an unbeatable combination for success**
-  * [9-print_comb.c](./9-print_comb.c): C program that prints all possible combinations of
-  single-digit numbers, using only the `putchar` function exactly four times without any
-  variables of type `char`:
-    * Numbers are separated by `,`, followed by a space.
-    * Numbers are printed in ascending order.
+12. The success combination in business is: Do what you do better... and: do more of what you do..
+Write a program that prints all possible different combinations of three digits. Similar to exercise 11. Using the same process as exercise 11, but with an additional variable to track the hundreds position.
 
-* **10. 00...99**
-  * [10-print_comb2.c](./10-print_comb2.c): C program that prints the numbers from `00`
-  to `99` using only the `putchar` function exactly five times without any variables of
-  type `char`:
-    * Numbers are separated by `,`, followed by a space.
-    * Numbers are printed in ascending order, with two digits.
-
-* **11. Inventing is a combination of brains and materials. The more brains you use, the less material you need**
-  * [100-print_comb3.c](./100-print_comb3.c): C program that prints all possible different
-  combinations of two digits using only the `putchar` function exactly five times without any
-  variables of type `char`:
-    * Numbers are separated by `,`, followed by a space.
-    * The two digits are different.
-    * `01` and `10` are considered the same combination of the two digits `0` and `1`.
-    * Prints only the smallest combination of two digits.
-    * Numbers are printed in ascending order.
-
-* **12. The success combination in business is: Do what you do better... and: do more of what you do...**
-  * [101-print_comb4.c](./101-print_comb4.c): C program that prints all possible different
-  combinations of three digits using only the `putchar` function exactly six times without
-  any variables of type `char`:
-    * Numbers are separated by `,`, followed by a space.
-    * The three digits are different.
-    * `012`, `120`, `102`, `021`, `201` and `210` are considered the same combination of the three digits `0`, `1` and `2`.
-    * Prints only the smallest combination of three digits.
-    * Numbers are printed in ascending order.
-
-* **13. Software is eating the World**
-  * [102-print_comb5.c](./102-print_comb5.c): C program that prints all possible combinations
-  of two-digit numbers using only the `putchar` function exactly eight times without any
-  variables of type `char`:
-    * Numbers range from `0` to `99`.
-    * Two numbers are separated by a space.
-    * Numbers are printed with two digits [ie. `1` is printed as `01`].
-    * `00 01` and `01 00` are considered the same as the combination of of the numbers `0` and `1`.
-    * Combinations of numbers are separated by `,`, followed by a space.
-    * Combinations of numbers are printed in ascending order.
+13. Software is eating the World
+Write a program that prints all possible combinations of two two-digit numbers. All number combinations should be separated by a space. This one was tricky. However, creating more variables to store each 2 digit number helped a lot in order to make comparisons. Using 2 loops, we can loop up the first double digit number, and the inner loop can increment up the second double digit number. Add an if conditional to make sure that the first double digit number isn't "98", so we don't add a comma and space at the end.
