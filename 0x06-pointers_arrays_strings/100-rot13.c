@@ -8,17 +8,23 @@
 
 char *rot13(char *s)
 {
-	int i;
-	char storeh[] = "NOPQRSTUVWXYZABCDEFGHIJKLM";
-	char storel[] = "nopqrstuvwxyzabcdefghijklm";
+	int index;
+	int rotIndex;
 
-	for (i = 0; s[i] != '\0'; i++)
+	char *rotI = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	char *rotO = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
+
+	for (index = 0; s[index] != '\0'; index++)
 	{
-		if ((s[i] > 64 && s[i] < 91) || (s[i] > 96 && s[i] < 123))
+		for (rotIndex = 0; rotIndex < 53; rotIndex++)
 		{
-			s[i] = (s[i] - 65 > 25) ?
-				storel[s[i] - 97] : storeh[s[i] - 65];
+			if (s[index] == rotI[rotIndex])
+			{
+				s[index] = rotO[rotIndex];
+				rotIndex = 53;
+			}
 		}
 	}
+
 	return (s);
 }
