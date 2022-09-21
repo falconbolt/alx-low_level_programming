@@ -1,92 +1,83 @@
 #include "main.h"
 
-void rev_string(char *s);
+char *add_strings(char *n1, char *n2, char *r, int r_index);
+char *infinite_add(char *n1, char *n2, char *r, int size_r);
 
 /**
- * infinite_add - Add two numbers.
- * @n1: t.
- * @n2: t.
- * @r: t.
- * @size_r: t.
+ * add_strings - Adds the numbers stored in two strings.
+ * @n1: The string containing the first number to be added.
+ * @n2: The string containing the second number to be added.
+ * @r: The buffer to store the result.
+ * @r_index: The current index of the buffer.
  *
- * Return: t.
+ * Return: If r can store the sum - a pointer to the result.
+ *         If r cannot store the sum - 0.
+ */
+
+char *add_strings(char *n1, char *n2, char *r, int r_index)
+{
+	int num, tens = 0;
+
+	for (; *n1 && *n2; n1--, n2--, r_index--)
+	{
+		num = (*n1 - '0') + (*n2 - '0');
+		num += tens;
+		*(r + r_index) = (num % 10) + '0';
+		tens = num / 10;
+	}
+
+	for (; *n1; n1--, r_index--)
+	{
+		num = (*n1 - '0') + tens;
+		*(r + r_index) = (num % 10) + '0';
+		tens = num / 10;
+	}
+
+	for (; *n2; n2--, r_index--)
+	{
+		num = (*n2 - '0') + tens;
+		*(r + r_index) = (num % 10) + '0';
+		tens = num / 10;
+	}
+
+	if (tens && r_index >= 0)
+	{
+		*(r + r_index) = (tens % 10) + '0';
+		return (r + r_index);
+	}
+
+	else if (tens && r_index < 0)
+		return (0);
+
+	return (r + r_index + 1);
+}
+/**
+ * infinite_add - Adds two numbers.
+ * @n1: The first number to be added.
+ * @n2: The second number to be added.
+ * @r: The buffer to store the result.
+ * @size_r: The buffer size.
+ *
+ * Return: If r can store the sum - a pointer to the result.
+ *         If r cannot store the sum - 0.
  */
 
 char *infinite_add(char *n1, char *n2, char *r, int size_r)
 {
-	char *m1 = n1;
-	char *m2 = n2;
-	int len1 = 0;
-	int len2 = 0;
-	int index, num1, num2, sum;
-	int carry = 0;
+	int index, n1_len = 0, n2_len = 0;
 
-	while (*m1 != '\0')
-	{
-		m1++;
-		len1++;
-	}
-	while (*m2 != '\0')
-	{
-		m2++;
-		len2++;
-	}
-	m1--;
-	m2--;
-	if (len1 > size_r - 1 || len2 > size_r - 1)
+	for (index = 0; *(n1 + index); index++)
+		n1_len++;
+
+	for (index = 0; *(n2 + index); index++)
+		n2_len++;
+
+	if (size_r <= n1_len + 1 || size_r <= n2_len + 1)
 		return (0);
-	for (index = 0; len1 > 0 || len2 > 0; index++)
-	{
-		num1 = 0;
-		num2 = 0;
-		if (len1 > 0)
-		{
-			num1 = *m1 - '0';
-			len1--;
-			m1--;
-		}
-		if (len2 > 0)
-		{
-			num2 = *m2 - '0';
-			len2--;
-			m2--;
-		}
-		sum = num1 + num2 + carry;
-		r[index] = sum % 10 + '0';
-		carry = sum / 10;
-	}
-	if (carry > 0 && index == size_r - 1)
-		return (0);
-	else if (carry > 0)
-		r[index++] = carry + '0';
-	r[index] = '\0';
-	rev_string(r);
-	return (r);
-}
 
-/**
- * rev_string - Reverses a string.
- * @s: Pointer to a character string.
- *
- * Return: void;
- */
+	n1 += n1_len - 1;
+	n2 += n2_len - 1;
+	*(r + size_r) = '\0';
 
-void rev_string(char *s)
-{
-	char c;
-	int back;
-	int front;
-	int length;
-
-	length = 0;
-	while (s[length] != '\0')
-		length++;
-	front = 0;
-	for (back = length - 1; back >= length / 2; back--)
-	{
-		c = s[front];
-		s[front] = s[back];
-		s[back] = c;
-		front++;
-	}
+	return (add_strings(n1, n2, r, --size_r));
 }
