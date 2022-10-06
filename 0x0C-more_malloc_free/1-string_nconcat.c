@@ -1,44 +1,78 @@
-#include "main.h"
 #include <stdlib.h>
+#include <stdio.h>
+
+unsigned int _strlen(char *s);
 
 /**
- * string_nconcat - Concatenates two strings using at
- *                  most an inputted number of bytes.
- * @s1: The first string.
- * @s2: The second string.
- * @n: The maximum number of bytes of s2 to concatenate to s1.
+ * _strlen - Returns the length of a string.
+ * @s: A pointer to the character string.
  *
- * Return: If the function fails - NULL.
- *         Otherwise - a pointer to the concatenated space in memory.
+ * Return: The length of the character string.
  */
+
+unsigned int _strlen(char *s)
+{
+	unsigned int length;
+
+	length = 0;
+
+	if (s == NULL)
+		return (0);
+
+	while (s[length])
+		length++;
+
+	return (length);
+}
+
+/**
+  * string_nconcat - Concatenates two strings. Copies the entire first strings
+  * and up to n bytes of the second string.
+  * @s1: Pointer to the first string.
+  * @s2: Pointer to the second string.
+  * @n: Bytes of s2 to concatenate to s1.
+  *
+  * Return: Pointer of type char to the concatenated string.
+  */
+
 char *string_nconcat(char *s1, char *s2, unsigned int n)
 {
-	char *concat;
-	unsigned int len = n, index;
+	char *ptr;
+	unsigned int len1;
+	unsigned int len2;
+	unsigned int mem;
+	unsigned int i;
+	unsigned int j;
 
-	if (s1 == NULL)
-		s1 = "";
+	len1 = _strlen(s1);
+	len2 = _strlen(s2);
 
-	if (s2 == NULL)
-		s2 = "";
+	if (n >= len2)
+		mem = len1 + len2;
+	else
+		mem = len1 + n;
 
-	for (index = 0; s1[index]; index++)
-		len++;
+	ptr = malloc(sizeof(*ptr) * (mem + 1));
 
-	concat = malloc(sizeof(char) * (len + 1));
-
-	if (concat == NULL)
+	if (!ptr)
 		return (NULL);
 
-	len = 0;
+	i = 0;
+	while (i < len1)
+	{
+		ptr[i] = s1[i];
+		i++;
+	}
 
-	for (index = 0; s1[index]; index++)
-		concat[len++] = s1[index];
+	j = 0;
+	while (i < mem)
+	{
+		ptr[i] = s2[j];
+		i++;
+		j++;
+	}
 
-	for (index = 0; s2[index] && index < n; index++)
-		concat[len++] = s2[index];
+	ptr[i] = '\0';
 
-	concat[len] = '\0';
-
-	return (concat);
+	return (ptr);
 }
