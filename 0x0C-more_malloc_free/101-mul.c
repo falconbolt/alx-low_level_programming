@@ -1,196 +1,122 @@
-#include "main.h"
 #include <stdlib.h>
 #include <stdio.h>
 
-int find_len(char *str);
-char *create_xarray(int size);
-char *iterate_zeroes(char *str);
-void get_prod(char *prod, char *mult, int digit, int zeroes);
-void add_nums(char *final_prod, char *next_prod, int next_len);
+unsigned int num_len(char *s);
+
+void *_calloc0(unsigned int nmemb, unsigned int size);
+
+void _mul(char *total, char *num1, unsigned int len1, char digit2);
 
 /**
- * find_len - Finds the length of a string.
- * @str: The string to be measured.
+ * num_len - Returns the length of a string containing numbers. If there's a
+ * non digit, prints Error and exits with status 98.
  *
- * Return: The length of the string.
- */
-int find_len(char *str)
-{
-	int len = 0;
-
-	while (*str++)
-		len++;
-
-	return (len);
-}
-
-/**
- * create_xarray - Creates an array of chars and initializes it with
- *                 the character 'x'. Adds a terminating null byte.
- * @size: The size of the array to be initialized.
+ * @s: A pointer to the character string.
  *
- * Description: If there is insufficient space, the
- *              function exits with a status of 98.
- * Return: A pointer to the array.
+ * Return: The length of the character string.
  */
-char *create_xarray(int size)
+
+unsigned int num_len(char *s)
 {
-	char *array;
-	int index;
+	unsigned int length;
 
-	array = malloc(sizeof(char) * size);
+	length = 0;
 
-	if (array == NULL)
-		exit(98);
-
-	for (index = 0; index < (size - 1); index++)
-		array[index] = 'x';
-
-	array[index] = '\0';
-
-	return (array);
-}
-
-/**
- * iterate_zeroes - Iterates through a string of numbers containing
- *                  leading zeroes until it hits a non-zero number.
- * @str: The string of numbers to be iterate through.
- *
- * Return: A pointer to the next non-zero element.
- */
-char *iterate_zeroes(char *str)
-{
-	while (*str && *str == '0')
-		str++;
-
-	return (str);
-}
-
-/**
- * get_digit - Converts a digit character to a corresponding int.
- * @c: The character to be converted.
- *
- * Description: If c is a non-digit, the function
- *              exits with a status of 98.
- * Return: The converted int.
- */
-int get_digit(char c)
-{
-	int digit = c - '0';
-
-	if (digit < 0 || digit > 9)
+	while (s[length])
 	{
-		printf("Error\n");
-		exit(98);
-	}
-
-	return (digit);
-}
-
-/**
- * get_prod - Multiplies a string of numbers by a single digit.
- * @prod: The buffer to store the result.
- * @mult: The string of numbers.
- * @digit: The single digit.
- * @zeroes: The necessary number of leading zeroes.
- *
- * Description: If mult contains a non-digit, the function
- *              exits with a status value of 98.
- */
-void get_prod(char *prod, char *mult, int digit, int zeroes)
-{
-	int mult_len, num, tens = 0;
-
-	mult_len = find_len(mult) - 1;
-	mult += mult_len;
-
-	while (*prod)
-	{
-		*prod = 'x';
-		prod++;
-	}
-
-	prod--;
-
-	while (zeroes--)
-	{
-		*prod = '0';
-		prod--;
-	}
-
-	for (; mult_len >= 0; mult_len--, mult--, prod--)
-	{
-		if (*mult < '0' || *mult > '9')
+		if (s[length] < '0' || s[length] > '9')
 		{
 			printf("Error\n");
 			exit(98);
 		}
-
-		num = (*mult - '0') * digit;
-		num += tens;
-		*prod = (num % 10) + '0';
-		tens = num / 10;
+		length++;
 	}
-
-	if (tens)
-		*prod = (tens % 10) + '0';
+	return (length);
 }
 
 /**
- * add_nums - Adds the numbers stored in two strings.
- * @final_prod: The buffer storing the running final product.
- * @next_prod: The next product to be added.
- * @next_len: The length of next_prod.
- */
-void add_nums(char *final_prod, char *next_prod, int next_len)
+  * _calloc0 - Allocates memory for an array using malloc and then sets the
+  * memory to character 0.
+  * @nmemb: Number of elements to allocate for the array.
+  * @size: Size in bytes of each element.
+  *
+  * Return: A void pointer to the first byte of the allocated memory, or NULL.
+  */
+
+void *_calloc0(unsigned int nmemb, unsigned int size)
 {
-	int num, tens = 0;
+	char *ptr;
+	unsigned int i;
+	unsigned int bytes;
 
-	while (*(final_prod + 1))
-		final_prod++;
+	bytes = nmemb * size;
 
-	while (*(next_prod + 1))
-		next_prod++;
+	if (bytes <= 0)
+		return (NULL);
 
-	for (; *final_prod != 'x'; final_prod--)
-	{
-		num = (*final_prod - '0') + (*next_prod - '0');
-		num += tens;
-		*final_prod = (num % 10) + '0';
-		tens = num / 10;
+	ptr = malloc(bytes);
 
-		next_prod--;
-		next_len--;
-	}
+	if (!ptr)
+		return (NULL);
 
-	for (; next_len >= 0 && *next_prod != 'x'; next_len--)
-	{
-		num = (*next_prod - '0');
-		num += tens;
-		*final_prod = (num % 10) + '0';
-		tens = num / 10;
+	for (i = 0; i < bytes; i++)
+		ptr[i] = '0';
 
-		final_prod--;
-		next_prod--;
-	}
-
-	if (tens)
-		*final_prod = (tens % 10) + '0';
+	return ((void *) ptr);
 }
 
 /**
- * main - Multiplies two positive numbers.
- * @argv: The number of arguments passed to the program.
- * @argc: An array of pointers to the arguments.
- *
- * Description: If the number of arguments is incorrect or one number
- *              contains non-digits, the function exits with a status of 98.
- * Return: Always 0.
- */
-int main(int argc, char *argv[])
+  * _mul - Iterate through the first number and multiply each digit with the
+  * digit from the second number, then add to total so far.
+  * @total: Pointer to the product of the first number and the second number.
+  * Points specifically to the last byte in memory that will be changed at the
+  * beginning of the function call. During the first function call the pointer
+  * points to the second to last byte in memory (last being the null byte).
+  * Each subsequent time the function is called, the pointer starts 1
+  * byte further to the left than the previous call. The pointer moves left
+  * with each loop during the function execution.
+  * @num1: Pointer to char string containing the first number.
+  * @len1: Length of the first number.
+  * @digit2: Current digit from the second number.
+  *
+  * Return: void.
+  */
+
+void _mul(char *total, char *num1, unsigned int len1, char digit2)
 {
-	char *final_prod, *next_prod;
-	int size, index, digit, zeroes = 0;
+	int j;
+	unsigned int sum;
+	unsigned int leftover;
+
+	leftover = 0;
+
+	for (j = len1 - 1; j >= 0; j--)
+	{
+		sum = (num1[j] - '0') * (digit2 - '0') + (*total - '0') + leftover;
+		leftover = sum / 10;
+		*total = (sum % 10) + '0';
+		total--;
+	}
+	*total = leftover + '0';
+}
+
+/**
+  * main - Multiplies two positive numbers and prints to terminal.
+  * @argc: The number of arguments passed.
+  * @argv: A pointer to an array of pointers that point to the arguments.
+  *
+  * Return: 0 upon successful run.
+  */
+
+int main(int argc, char **argv)
+{
+	char *total;
+	char *num1;
+	char *num2;
+	int i;
+	unsigned int len1;
+	unsigned int len2;
+	unsigned int shift_left;
 
 	if (argc != 3)
 	{
@@ -198,35 +124,38 @@ int main(int argc, char *argv[])
 		exit(98);
 	}
 
-	if (*(argv[1]) == '0')
-		argv[1] = iterate_zeroes(argv[1]);
-	if (*(argv[2]) == '0')
-		argv[2] = iterate_zeroes(argv[2]);
-	if (*(argv[1]) == '\0' || *(argv[2]) == '\0')
+	len1 = num_len(argv[1]);
+	len2 = num_len(argv[2]);
+	num1 = argv[1];
+	num2 = argv[2];
+
+	total = _calloc0(len2 + len1 + 1, sizeof(*total));
+
+	if (!total)
 	{
+		printf("Allocation of total has failed\n");
+		exit(98);
+	}
+
+	shift_left = 0;
+	/* iterate through each digit in num2 starting with last*/
+	for (i = len2 - 1; i >= 0; i--)
+	{
+		/* pass address of the 2nd to last byte in memory minus number */
+		/* of bytes that wont change during calculation */
+		_mul((total + len2 + len1 - 1 - shift_left), num1, len1, num2[i]);
+		shift_left++;
+	}
+	total[len2 + len1] = '\0';
+
+	for (i = 0; total[i] == '0'; i++)
+		;
+	if (total[i] != '\0')
+		printf("%s\n", &total[i]);
+	else
 		printf("0\n");
-		return (0);
-	}
 
-	size = find_len(argv[1]) + find_len(argv[2]);
-	final_prod = create_xarray(size + 1);
-	next_prod = create_xarray(size + 1);
-
-	for (index = find_len(argv[2]) - 1; index >= 0; index--)
-	{
-		digit = get_digit(*(argv[2] + index));
-		get_prod(next_prod, argv[1], digit, zeroes++);
-		add_nums(final_prod, next_prod, size - 1);
-	}
-	for (index = 0; final_prod[index]; index++)
-	{
-		if (final_prod[index] != 'x')
-			putchar(final_prod[index]);
-	}
-	putchar('\n');
-
-	free(next_prod);
-	free(final_prod);
+	free(total);
 
 	return (0);
 }
