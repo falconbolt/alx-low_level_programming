@@ -1,67 +1,83 @@
-#include "3-calc.h"
-
-int op_add(int a, int b);
-int op_sub(int a, int b);
-int op_mul(int a, int b);
-int op_div(int a, int b);
-int op_mod(int a, int b);
+#include <stdio.h>
+#include <stdlib.h>
 
 /**
- * op_add - Returns the sum of two numbers.
- * @a: The first number.
- * @b: The second number.
- *
- * Return: The sum of a and b.
- */
+  * op_add - Adds two numbers.
+  * @a: An integer number.
+  * @b: An integer number.
+  *
+  * Return: The sum of the two numbers.
+  */
+
 int op_add(int a, int b)
 {
 	return (a + b);
 }
 
 /**
- * op_sub - Returns the difference of two numbers.
- * @a: The first number.
- * @b: The second number.
- *
- * Return: The difference of a and b.
- */
+  * op_sub - Subtracts two numbers.
+  * @a: An integer number.
+  * @b: An integer number.
+  *
+  * Return: The difference of the two numbers.
+  */
+
 int op_sub(int a, int b)
 {
 	return (a - b);
 }
 
 /**
- * op_mul - Returns the product of two numbers.
- * @a: The first number.
- * @b: The second number.
- *
- * Return: The product of a and b.
- */
+  * op_mul - Multiplies two numbers.
+  * @a: An integer number.
+  * @b: An integer number.
+  *
+  * Return: The product of the two numbers.
+  */
+
 int op_mul(int a, int b)
 {
 	return (a * b);
 }
 
 /**
- * op_div - Returns the division of two numbers.
- * @a: The first number.
- * @b: The second number.
- *
- * Return: The quotient of a and b.
- */
+  * op_div - Finds largest whole factor one number can go into another number.
+  * @a: An integer number.
+  * @b: An integer number.
+  *
+  * Return: The largest whole factor of b going into a.
+  */
+
 int op_div(int a, int b)
 {
-	return (a / b);
+	if (b != 0)
+	{
+		return (a / b);
+	}
+	else
+	{
+		printf("Error\n");
+		exit(100);
+	}
 }
 
 /**
- * op_mod - Returns the remainder of the division of two numbers.
- * @a: The first number.
- * @b: The second number.
- *
- * Return: The remainder of the division of a by b.
- */
+  * op_mod - Finds the remainder left by the division of a and b.
+  * @a: An integer number.
+  * @b: An integer number.
+  *
+  * Return: The remainder.
+  */
+
 int op_mod(int a, int b)
 {
-	return (a % b);
+	if (b != 0)
+	{
+		return (a % b);
+	}
+	else
+	{
+		printf("Error\n");
+		exit(100);
+	}
 }
